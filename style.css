@@ -1,0 +1,159 @@
+/*
+Theme Name: MWN Professional
+Description: Custom theme for MeddlingWithNature.com
+Author: Nate Wessel
+Author URI: http://www.natewessel.com
+Version: 1.1
+*/
+
+@font-face {
+	font-family: 'Charter';
+	src: url('fonts/n/Charter-regular.woff') format('woff');
+	font-weight: normal;
+	font-style: normal; }
+@font-face {
+	font-family: 'Charter';
+	src: url('fonts/n/Charter-bold.woff') format('woff');
+	font-weight: bold;
+	font-style: normal; }
+@font-face {
+	font-family: 'Charter';
+	src: url('fonts/n/Charter-italic.woff') format('woff');
+	font-weight: normal;
+	font-style: italic; }
+@font-face {
+	font-family: 'Charter';
+	src: url('fonts/n/Charter-bold-italic.woff') format('woff');
+	font-weight: bold;
+	font-style: italic; }
+
+/* Color definitions in one place for consistency */
+:root {
+	--background: #fefcf9; /* off-white */
+	--link-blue: #4b78c8; /* bright blue */
+	--light-grey: #999;
+	--text: #47342d; /* dark brown */
+	--menu-link: #263299; /* dark blue */
+}
+
+/* BASICS */
+html, body {
+	width:100%;
+	min-height: 100%;
+	background-color: var(--background); }
+body {
+	width:90%;
+	font-family: Charter, serif;
+	font-size: 15pt;
+	background: var(--background); 
+	color: var(--text);
+	margin: 0 5% 0 5%; }
+a {
+	color: var(--link-blue);
+	text-decoration: none; }
+a:hover {
+	text-decoration: underline; }
+h1,h2,h3,h4,h5,h6 { }
+
+nav {
+	display: flex;
+	justify-content: space-between; /*title  -----  menu items*/
+	font-size: 1.3em;
+	font-weight: normal;
+	line-height: 1.3;
+	margin: 0; }
+
+nav #logo, nav #parent-link {
+	height: 1.1em;
+	vertical-align: middle; }
+
+nav a {
+	color: var(--menu-link);
+	font-size: 1.3em; }
+nav li.current_page_item a {
+	color: var(--text); }
+nav ul { 
+	padding-left: 0;
+	display: flex;
+	flex-direction: column;
+	font-weight: bold;
+	list-style: none; }
+nav > * {
+	margin-bottom: 0; }
+
+.subpage {
+	margin-bottom: 30px; }
+.subpage h2 {
+	margin: 0;
+	display: block;
+	font-size: 1.4em; }
+.subpage .excerpt {
+	display: block;
+	text-align: left; 
+	font-size: .7em;
+	color: var(--light-grey); }
+.subpage p {
+	margin: 0; }
+
+.blog .subpage .editdate {
+	text-align: right; }
+
+ul.mwn-gallery {
+	list-style: none; 
+	padding-left: 0;
+	display: flex;
+	flex-wrap: wrap; }
+ul.mwn-gallery img {
+	margin: 10px; }
+
+footer {
+	flex-shrink: 0; 
+	border-top: 1px solid var(--light-grey); 
+	color: var(--light-grey); 
+	font-size: 0.9em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+
+/* short event decription blocks */
+.event {
+	border-left: 2px solid var(--text);
+	padding-left: 10px; }
+.event h3 {
+	margin-bottom: 0; }
+.event .city {
+	font-weight: bold; }
+.event p {
+	margin: 0.25em 0; }
+
+/* event pages */
+#event .city {
+	font-weight: bold; }
+#event .city~.start:before { /* .start preceded by .city */
+	content: ' - ';
+	color: green; }
+
+
+
+/* Large screens */
+@media (min-width: 500px) {
+	nav ul {
+		flex-flow: row wrap;
+		justify-content: flex-end; }
+	nav ul li {	
+			margin-left: 1em; }
+
+	.subpage img {
+		float: left;
+		margin-right: 20px; }
+	.subpage {
+		overflow: auto; }
+}
+
+@media (min-width: 700px){
+	body {
+		margin: 0 auto;
+		max-width: 700px; }
+}
+
+
