@@ -185,7 +185,8 @@ function mwn_event_short_div($ID){
 	if( get_post_type($ID) != 'mwn_event' ){ return ''; }
 	$link = get_the_permalink($ID);
 	$title = get_the_title($ID);
-	$val = "<div class='event'><a href='$link' title='Event details'><h3>$title</h3></a>";
+	$time = mwn_event_is_yet($ID) ? 'upcoming' : 'past';
+	$val = "<div class='event $time'><a href='$link' title='Event details'><h3>$title</h3></a>";
 	$val .= "<p class='meta'>";
 	# get and parse post metadata 
 	$city  = mwn_date_parse( get_post_meta($ID,'city',true) );

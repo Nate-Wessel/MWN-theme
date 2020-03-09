@@ -16,7 +16,7 @@ if(have_posts()){
 		echo "<p id='meta'>";
 		echo $city != '' ?    "<span class='city'>$city</span>" : '';
 		echo $start != '' ?   "<span class='date start'>$start</span><br>" : '';
-		echo $extLink != '' ? "<span class='external-link'><a href='$extLink'>Link to more information</a></span><br>\n": '';
+		echo $extLink != '' ? "<span class='external-link'><a href='$extLink'>Tickets, location,  <i>etc.</i></a></span><br>\n": '';
 		#echo $end != '' ?     "<span class='date end'>$end</span><br>" : '';
 		echo "</p>";
 	}
