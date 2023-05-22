@@ -51,7 +51,7 @@ function mwn_gallery_handler( $atts ){
 		'post_type' => 'attachment',
 		'gallery_tag' => $tags,
 		'post_status' => 'any',
-		'orderby' => 'rand',
+		#'orderby' => 'rand',
 		'nopaging' => true
 	));
 	if( $wpq->found_posts == 0 ){ 
