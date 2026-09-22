@@ -5,7 +5,8 @@
 $query = new WP_Query( array( 
 	'post_type' => 'mwn_event',
 	'orderby' => 'meta_value',
-	'meta_key' => 'start'
+	'meta_key' => 'start',
+	'nopaging' => true
 )); 
 
 // The Loop
