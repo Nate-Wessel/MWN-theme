@@ -4,8 +4,8 @@
 		<meta http-equiv="Content-type" content="<?php bloginfo('html_type'); ?>">
 		<title><?php bloginfo('name'); ?></title>
 		<link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url')?>" >
-		<meta name="description" content="Cartography and data visualisation">
-		<meta name="author" content="Nate Wessel">
+		<meta name="description" content="Taxidermy services and educational workshops">
+		<meta name="author" content="Jeremy Johnson">
 		<meta id="meta" name="viewport" content="width=device-width; initial-scale=1.0" />
 		<?php wp_head(); ?>
 	</head>
