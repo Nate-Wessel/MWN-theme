@@ -97,7 +97,7 @@ function mwn_past_events_handler( $atts ){
 	$events = get_posts(array( 
 		'post_type' => 'mwn_event', 'numberposts' => -1,
 		'orderby' => 'meta_value', 'meta_key=start',
-		'order' => 'ASC' // sort by: most recent first
+		'order' => 'DESC' // sort by: most recent first
 	));
 	$val = '';
 	foreach($events as $event){
