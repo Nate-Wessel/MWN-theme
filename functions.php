@@ -78,8 +78,9 @@ add_shortcode( 'mwn_gallery', 'mwn_gallery_handler' );
 function mwn_upcoming_events_handler( $atts ){
 	# handles the mwn_upcoming_events shortcode by listing upcoming events
 	$events = get_posts(array( 
-		'post_type'=>'mwn_event', 'numberposts'=>-1,
-		'orderby'=>'meta_value', 'meta_key=start'
+		'post_type' => 'mwn_event', 'numberposts' => -1,
+		'orderby' => 'meta_value', 'meta_key=start',
+		'order' => 'ASC' // sort by: starting soonest first
 	));
 	$val = '';
 	foreach($events as $event){
@@ -90,6 +91,23 @@ function mwn_upcoming_events_handler( $atts ){
 	return $val != '' ? $val : '<p>No upcoming events found. Alas!</p>';
 }
 add_shortcode( 'mwn_upcoming_events', 'mwn_upcoming_events_handler' );
+
+function mwn_past_events_handler( $atts ){
+	# handles the mwn_past_events shortcode by listing all past events
+	$events = get_posts(array( 
+		'post_type' => 'mwn_event', 'numberposts' => -1,
+		'orderby' => 'meta_value', 'meta_key=start',
+		'order' => 'ASC' // sort by: most recent first
+	));
+	$val = '';
+	foreach($events as $event){
+		if( ! mwn_event_is_yet($event->ID)){
+			$val .= mwn_event_short_div($event->ID);
+		}
+	}
+	return $val != '' ? $val : '<p>What world is this in which there are no past events?</p>';
+}
+add_shortcode( 'mwn_past_events', 'mwn_past_events_handler' );
 
 function register_mwn_event_post_type(){
 	$args = array(
