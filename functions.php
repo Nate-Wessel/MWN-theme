@@ -156,6 +156,8 @@ function mwn_event_meta_box_markup($object){
 		<input name="external-link" type="text" value="<?php echo get_post_meta($object->ID, "external-link", true); ?>"><br>
 		<label for="duration">Event Duration</label><br>
 		<input name="duration" type="text" value="<?php echo get_post_meta($object->ID, "duration", true); ?>"><br>
+		<label for="seats">Number of seats available</label><br>
+		<input name="seats" type="text" value="<?php echo get_post_meta($object->ID, "seats", true); ?>"><br>
 		<label for="start">Event Start Time</label><br>
 		<input name="start" type="text" value="<?php echo get_post_meta($object->ID, "start", true); ?>"><br>
 		<label for="end">Event End Time</label><br>
@@ -186,6 +188,9 @@ function mwn_save_event_meta_box($post_id){
 	}
 	if(isset($_POST['duration'])){
 		update_post_meta($post_id, 'duration', $_POST['duration']);
+	}
+	if(isset($_POST['seats'])){
+		update_post_meta($post_id, 'seats', $_POST['seats']);
 	}
 	// checkboxes post 'on' when checked, otherwise are not posted
 	update_post_meta(
