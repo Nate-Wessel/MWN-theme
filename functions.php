@@ -154,6 +154,8 @@ function mwn_event_meta_box_markup($object){
 		<input name="city" type="text" value="<?php echo get_post_meta($object->ID, "city", true); ?>"><br>
 		<label for="external-link">External link</label><br>
 		<input name="external-link" type="text" value="<?php echo get_post_meta($object->ID, "external-link", true); ?>"><br>
+		<label for="duration">Event Duration</label><br>
+		<input name="duration" type="text" value="<?php echo get_post_meta($object->ID, "duration", true); ?>"><br>
 		<label for="start">Event Start Time</label><br>
 		<input name="start" type="text" value="<?php echo get_post_meta($object->ID, "start", true); ?>"><br>
 		<label for="end">Event End Time</label><br>
@@ -177,6 +179,9 @@ function mwn_save_event_meta_box($post_id){
 	}
 	if(isset($_POST['external-link'])){
 		update_post_meta($post_id, 'external-link', $_POST['external-link']);
+	}
+	if(isset($_POST['duration'])){
+		update_post_meta($post_id, 'duration', $_POST['duration']);
 	}
 }
 
