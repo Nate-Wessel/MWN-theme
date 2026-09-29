@@ -161,6 +161,10 @@ function mwn_event_meta_box_markup($object){
 		<label for="end">Event End Time</label><br>
 		<input name="end" type="text" value="<?php echo get_post_meta($object->ID, "end", true); ?>"><br>
 		<p>Time format should be as follows: <br>'YYYY-MM-DD HH:MM:SS'</p>
+		<label for="registration-closed">Registration is closed?</label><br>
+		<input name="registration-closed" type="checkbox"
+			<?php echo get_post_meta($object->ID, "registration-closed", true) == 'true' ? 'checked' : '';?>
+		>
 	</div>
 <?php 
 }
@@ -183,6 +187,12 @@ function mwn_save_event_meta_box($post_id){
 	if(isset($_POST['duration'])){
 		update_post_meta($post_id, 'duration', $_POST['duration']);
 	}
+	// checkboxes post 'on' when checked, otherwise are not posted
+	update_post_meta(
+		$post_id,
+		'registration-closed',
+		isset($_POST['registration-closed']) ? 'true' : 'false'
+	);
 }
 
 function mwn_event_is_yet($ID){
