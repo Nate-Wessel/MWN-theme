@@ -78,9 +78,11 @@ add_shortcode( 'mwn_gallery', 'mwn_gallery_handler' );
 function mwn_upcoming_events_handler( $atts ){
 	# handles the mwn_upcoming_events shortcode by listing upcoming events
 	$events = get_posts(array( 
-		'post_type' => 'mwn_event', 'numberposts' => -1,
-		'orderby' => 'meta_value', 'meta_key=start',
-		'order' => 'ASC' // sort by: starting soonest first
+		'post_type' => 'mwn_event',
+		'numberposts' => -1,
+		'orderby' => 'meta_value',
+		'meta_key' => 'start',
+		'order' => 'ASC'
 	));
 	$val = '';
 	foreach($events as $event){
@@ -95,8 +97,10 @@ add_shortcode( 'mwn_upcoming_events', 'mwn_upcoming_events_handler' );
 function mwn_past_events_handler( $atts ){
 	# handles the mwn_past_events shortcode by listing all past events
 	$events = get_posts(array( 
-		'post_type' => 'mwn_event', 'numberposts' => -1,
-		'orderby' => 'meta_value', 'meta_key=start',
+		'post_type' => 'mwn_event',
+		'numberposts' => -1,
+		'orderby' => 'meta_value',
+		'meta_key' => 'start',
 		'order' => 'DESC' // sort by: most recent first
 	));
 	$val = '';
