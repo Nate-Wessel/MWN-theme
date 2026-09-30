@@ -130,7 +130,13 @@ footer {
 .event .meta > :not(:first-child)::before {
 	content: ' – ';
 }
-.event.past .seats {
+.event.closed.upcoming .meta::after{
+	content: ' Registration is closed';
+	color: red;
+	font-weight: bold;
+}
+.event.past .seats,
+.event.closed .seats {
 	display: none;
 }
 
