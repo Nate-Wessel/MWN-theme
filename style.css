@@ -122,20 +122,48 @@ footer {
 .event h3 {
 	margin-bottom: 0; }
 .event .city {
-	font-weight: bold; }
+	font-weight: bold;
+}
+.event.upcoming .seats::after {
+	content: ' seats available';
+}
+.event.upcoming .seats {
+	font-weight: bold;
+	color: darkgreen;
+}
+.event .meta > :not(:first-child)::before {
+	content: ' – ';
+}
+.event.closed.upcoming .meta::after{
+	content: ' Registration is closed';
+	color: red;
+	font-weight: bold;
+}
+.event.past .seats,
+.event.closed .seats {
+	display: none;
+}
+
 .event p {
 	margin: 0.25em 0; }
 .event.past {
-	opacity: 0.4; }
+	opacity: 0.4;
+}
 
 /* event pages */
 #event .city {
-	font-weight: bold; }
-#event .city~.start:before { /* .start preceded by .city */
-	content: ' - ';
-	color: green; }
+	font-weight: bold;
+}
 
+#event #meta .closed {
+	font-weight: bold;
+	color: red;
+}
 
+#event #meta .open {
+	font-weight: bold;
+	color: darkgreen;
+}
 
 /* Large screens */
 @media (min-width: 500px) {

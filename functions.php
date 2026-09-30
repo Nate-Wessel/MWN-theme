@@ -139,7 +139,7 @@ add_action( 'init', 'register_mwn_event_post_type' );
 function add_mwn_event_meta_box(){
 	add_meta_box(
 		"mwn_event_meta_box", # ID
-		"Event Dates",        # metabox title
+		"Event Details",        # metabox title
 		"mwn_event_meta_box_markup", # callback function to display box contents
 		"mwn_event",          # post type effected
 		"side", "low",        # location, priority
@@ -154,11 +154,19 @@ function mwn_event_meta_box_markup($object){
 		<input name="city" type="text" value="<?php echo get_post_meta($object->ID, "city", true); ?>"><br>
 		<label for="external-link">External link</label><br>
 		<input name="external-link" type="text" value="<?php echo get_post_meta($object->ID, "external-link", true); ?>"><br>
+		<label for="duration">Event Duration</label><br>
+		<input name="duration" type="text" value="<?php echo get_post_meta($object->ID, "duration", true); ?>"><br>
+		<label for="seats">Number of seats available</label><br>
+		<input name="seats" type="text" value="<?php echo get_post_meta($object->ID, "seats", true); ?>"><br>
 		<label for="start">Event Start Time</label><br>
 		<input name="start" type="text" value="<?php echo get_post_meta($object->ID, "start", true); ?>"><br>
 		<label for="end">Event End Time</label><br>
 		<input name="end" type="text" value="<?php echo get_post_meta($object->ID, "end", true); ?>"><br>
 		<p>Time format should be as follows: <br>'YYYY-MM-DD HH:MM:SS'</p>
+		<label for="registration-closed">Registration is closed?</label><br>
+		<input name="registration-closed" type="checkbox"
+			<?php echo get_post_meta($object->ID, "registration-closed", true) == 'true' ? 'checked' : '';?>
+		>
 	</div>
 <?php 
 }
@@ -178,16 +186,29 @@ function mwn_save_event_meta_box($post_id){
 	if(isset($_POST['external-link'])){
 		update_post_meta($post_id, 'external-link', $_POST['external-link']);
 	}
+	if(isset($_POST['duration'])){
+		update_post_meta($post_id, 'duration', $_POST['duration']);
+	}
+	if(isset($_POST['seats'])){
+		$seatCount = intval($_POST['seats']);
+		update_post_meta($post_id, 'seats', $seatCount > 0 ? $seatCount : NULL);
+	}
+	// checkboxes post 'on' when checked, otherwise are NOT posted
+	update_post_meta(
+		$post_id,
+		'registration-closed',
+		isset($_POST['registration-closed']) ? 'true' : 'false'
+	);
 }
 
 function mwn_event_is_yet($ID){
 	# is this event scheduled for the future? yes = true, else false
 	# return false for invalid date formats
 	$datestring = get_post_meta($ID, 'start',true);
-	if($datestring ==''){return false;}
+	if($datestring ==''){ return false; }
 	$tz = new DateTimeZone('America/Toronto');
 	$startdate = date_create_from_format('Y-m-d H:i:s',$datestring,$tz);
-	if(!$startdate){return false;}
+	if(!$startdate){ return false; }
 	if( $startdate < new DateTime("last week") ){ return false; };
 	return true;
 }
@@ -207,14 +228,20 @@ function mwn_event_short_div($ID){
 	if( get_post_type($ID) != 'mwn_event' ){ return ''; }
 	$link = get_the_permalink($ID);
 	$title = get_the_title($ID);
-	$time = mwn_event_is_yet($ID) ? 'upcoming' : 'past';
-	$val = "<div class='event $time'><a href='$link' title='Event details'><h3>$title</h3></a>";
+	$futureOrPast = mwn_event_is_yet($ID) ? 'upcoming' : 'past';
+	$closed = mwn_date_parse( get_post_meta($ID,'registration-closed', true) );
+	$openClass = $closed == 'true' ? 'closed' : 'open';
+	$val = "<div class='event $futureOrPast $openClass'><a href='$link' title='Event details'><h3>$title</h3></a>";
 	$val .= "<p class='meta'>";
 	# get and parse post metadata 
 	$city  = mwn_date_parse( get_post_meta($ID,'city',true) );
+	if($city){ $val .= "<span class='city'>$city</span>\n"; }
 	$start = mwn_date_parse( get_post_meta($ID,'start',true) );
-	$val .= "<span class='city'>$city</span> -\n";
-	$val .= "<span class='start'>$start</span>\n";
+	if($start){ $val .= "<span class='start'>$start</span>\n"; }
+	$duration = mwn_date_parse( get_post_meta($ID,'duration',true) );
+	if($duration){ $val .= "<span class='duration'>$duration</span>\n"; }
+	$seats = mwn_date_parse( get_post_meta($ID,'seats',true) );
+	if($seats){ $val .= "<span class='seats'>$seats</span>\n"; }
 	$val .= "</p>\n"; # .meta
 	if(has_excerpt($ID)){
 		$excerpt = get_the_excerpt($ID);
