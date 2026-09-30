@@ -7,18 +7,34 @@ if(have_posts()){
 <h1 class="page-title"><?php the_title(); ?></h1>
 <?php
 	# get and parse post metadata 
-	$city    = mwn_date_parse( get_post_meta($post->ID,'city',true) );
-	$start   = mwn_date_parse( get_post_meta($post->ID,'start',true) );
-	#$end     = mwn_date_parse( get_post_meta($post->ID,'end',true) );
+	$city = get_post_meta($post->ID,'city',true);
+	$start = mwn_date_parse(
+		get_post_meta($post->ID,'start',true)
+	);
+	
+	$duration = get_post_meta($post->ID,'duration',true);
+	$seats = get_post_meta($post->ID,'seats',true);
+	$closed = ( // event is closed or over
+		get_post_meta($post->ID,'registration-closed',true) == 'true'
+		|| ! mwn_event_is_yet($post->ID)
+	);
+	#$end = mwn_date_parse( get_post_meta($post->ID,'end',true) );
 	$extLink = get_post_meta($post->ID,'external-link',true);
  	# print metadata if any
 	if($city != '' || $extLink != '' || $start != '' || $end != ''){
-		echo "<p id='meta'>";
-		echo $city != '' ?    "<span class='city'>$city</span>" : '';
-		echo $start != '' ?   "<span class='date start'>$start</span><br>" : '';
-		echo $extLink != '' ? "<span class='external-link'><a href='$extLink'>Tickets, location,  <i>etc.</i></a></span><br>\n": '';
+		echo "<div id='meta'>";
+		if($closed){
+			echo "<div class='closed'>Registration is closed</div>";
+		}else{
+			echo "<div class='open'>Registration is OPEN</div>";
+		}
+		echo $city ? "<div class='city'>$city</div>" : '';
+		echo $start ? "<div class='date start'> Starts $start</div>" : '';
+		echo $duration ? "<div class='duration'>Duration: $duration</div>" : '';
+		echo $extLink ? "<div class='external-link'><a href='$extLink'>Tickets, location,  <i>etc.</i></a></div>\n": '';
+		echo ($seats && ! $closed) ? "<div class='seats'>$seats spots available</div>" : '';
 		#echo $end != '' ?     "<span class='date end'>$end</span><br>" : '';
-		echo "</p>";
+		echo "</div>";
 	}
 ?>
 
