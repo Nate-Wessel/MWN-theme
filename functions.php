@@ -139,7 +139,7 @@ add_action( 'init', 'register_mwn_event_post_type' );
 function add_mwn_event_meta_box(){
 	add_meta_box(
 		"mwn_event_meta_box", # ID
-		"Event Dates",        # metabox title
+		"Event Details",        # metabox title
 		"mwn_event_meta_box_markup", # callback function to display box contents
 		"mwn_event",          # post type effected
 		"side", "low",        # location, priority
@@ -190,9 +190,10 @@ function mwn_save_event_meta_box($post_id){
 		update_post_meta($post_id, 'duration', $_POST['duration']);
 	}
 	if(isset($_POST['seats'])){
-		update_post_meta($post_id, 'seats', $_POST['seats']);
+		$seatCount = intval($_POST['seats']);
+		update_post_meta($post_id, 'seats', $seatCount > 0 ? $seatCount : NULL);
 	}
-	// checkboxes post 'on' when checked, otherwise are not posted
+	// checkboxes post 'on' when checked, otherwise are NOT posted
 	update_post_meta(
 		$post_id,
 		'registration-closed',
@@ -204,10 +205,10 @@ function mwn_event_is_yet($ID){
 	# is this event scheduled for the future? yes = true, else false
 	# return false for invalid date formats
 	$datestring = get_post_meta($ID, 'start',true);
-	if($datestring ==''){return false;}
+	if($datestring ==''){ return false; }
 	$tz = new DateTimeZone('America/Toronto');
 	$startdate = date_create_from_format('Y-m-d H:i:s',$datestring,$tz);
-	if(!$startdate){return false;}
+	if(!$startdate){ return false; }
 	if( $startdate < new DateTime("last week") ){ return false; };
 	return true;
 }
