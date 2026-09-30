@@ -122,19 +122,31 @@ footer {
 .event h3 {
 	margin-bottom: 0; }
 .event .city {
-	font-weight: bold; }
+	font-weight: bold;
+}
+.event.upcoming .seats::after {
+	content: ' seats available';
+}
+.event .meta > :not(:first-child)::before {
+	content: ' – ';
+}
+.event.past .seats {
+	display: none;
+}
+
 .event p {
 	margin: 0.25em 0; }
 .event.past {
-	opacity: 0.4; }
+	opacity: 0.4;
+}
 
 /* event pages */
 #event .city {
 	font-weight: bold; }
 #event .city~.start:before { /* .start preceded by .city */
 	content: ' - ';
-	color: green; }
-
+	color: green;
+}
 
 
 /* Large screens */

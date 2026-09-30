@@ -233,9 +233,13 @@ function mwn_event_short_div($ID){
 	$val .= "<p class='meta'>";
 	# get and parse post metadata 
 	$city  = mwn_date_parse( get_post_meta($ID,'city',true) );
+	if($city){ $val .= "<span class='city'>$city</span>\n"; }
 	$start = mwn_date_parse( get_post_meta($ID,'start',true) );
-	$val .= "<span class='city'>$city</span> -\n";
-	$val .= "<span class='start'>$start</span>\n";
+	if($start){ $val .= "<span class='start'>$start</span>\n"; }
+	$duration = mwn_date_parse( get_post_meta($ID,'duration',true) );
+	if($duration){ $val .= "<span class='duration'>$duration</span>\n"; }
+	$seats = mwn_date_parse( get_post_meta($ID,'seats',true) );
+	if($seats){ $val .= "<span class='seats'>$seats</span>\n"; }
 	$val .= "</p>\n"; # .meta
 	if(has_excerpt($ID)){
 		$excerpt = get_the_excerpt($ID);
